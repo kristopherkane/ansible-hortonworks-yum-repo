@@ -1,0 +1,16 @@
+---
+- name: Download the HDP repo file
+  get_url: url='{{ hdp_repo_file }}' dest='/etc/yum.repos.d/hdp-{{ hdp_version }}.repo' mode=0644
+  tags: hdp
+
+- name: Make the repo directory
+  file: path='{{ hdp_repo_install_directory }}' state=directory
+  tags: hdp
+
+- name: Call reposync
+  command: 'reposync --norepopath -r {{ hdp_repo_id }} -p {{ hdp_repo_install_directory }}/hdp-{{ hdp_version }}'
+  tags: hdp
+
+- name: Create the repository
+  command: 'createrepo {{ hdp_repo_install_directory }}/hdp-{{ hdp_version }}'
+  tags: hdp

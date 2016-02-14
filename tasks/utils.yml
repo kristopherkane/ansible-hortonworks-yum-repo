@@ -1,0 +1,16 @@
+---
+- name: Download the HDP repo file
+  get_url: url='{{ utils_repo_file }}' dest='/etc/yum.repos.d/utils-{{ utils_version }}.repo' mode=0644
+  tags: utils
+
+- name: Make the repo directory
+  file: path='{{ utils_repo_install_directory }}' state=directory
+  tags: utils
+
+- name: Call reposync
+  command: 'reposync --norepopath -r {{ utils_repo_id }} -p {{ utils_repo_install_directory }}/utils-{{ utils_version }}'
+  tags: utils
+
+- name: Create the repository
+  command: 'createrepo {{ utils_repo_install_directory }}/utils-{{ utils_version }}'
+  tags: utils

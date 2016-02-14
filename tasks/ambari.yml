@@ -1,0 +1,16 @@
+---
+- name: Download the Ambari repo file
+  get_url: url='{{ ambari_repo_file }}' dest='/etc/yum.repos.d/ambari-{{ ambari_version }}.repo' mode=0644
+  tags: ambari
+
+- name: Make the repo directory
+  file: path='{{ ambari_repo_install_directory }}' state=directory
+  tags: ambari
+
+- name: Call reposync
+  command: 'reposync --norepopath -r {{ ambari_repo_id }} -p {{ ambari_repo_install_directory }}/ambari-{{ ambari_version }}'
+  tags: ambari
+
+- name: Create the repository
+  command: 'createrepo {{ ambari_repo_install_directory }}/ambari-{{ ambari_version }}'
+  tags: ambari

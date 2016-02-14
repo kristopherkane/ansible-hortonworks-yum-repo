@@ -1,0 +1,28 @@
+---
+- name: Install Apache httpd and supporting repo libs
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - httpd
+    - yum-utils
+    - repoview
+    - createrepo
+  tags: httpd
+
+- name: Ensure Apache is always running
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+  tags: httpd
+
+
+- include: ambari.yml
+  when: update_ambari == 'true'
+
+- include: hdp.yml
+  when: update_hdp == 'true'
+
+- include: utils.yml
+  when: update_utils == 'true'

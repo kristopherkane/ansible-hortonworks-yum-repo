@@ -1,0 +1,17 @@
+galaxy_info:
+  author: Kristopher Kane
+  description: Management of local Hortonworks software repositories
+  company: none
+  license: Apache 2
+  min_ansible_version: 1.2
+  #github_branch:
+  platforms:
+  - name: EL
+    versions:
+    - 5
+    - 6
+    - 7
+
+  galaxy_tags: system
+
+dependencies: []
